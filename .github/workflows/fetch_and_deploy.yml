@@ -1,0 +1,41 @@
+# Workflow name
+name: Fetch and Deploy Mix File
+
+on:
+  # This option allows you to run the workflow manually from the Actions tab (for testing)
+  workflow_dispatch:
+
+  # Scheduled run every two hours
+  schedule:
+    - cron: '0 */2 * * *'
+
+jobs:
+  build-and-deploy:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    
+    # A sequence of tasks called "steps"
+    steps:
+      # Step 1: Download the file from the target URL
+      - name: Download the external file
+        # Use the 'curl' command to download the file and save it as 'mix.txt'
+        run: curl -o mix.txt "https://raw.githubusercontent.com/tvccccc/TVC/refs/heads/main/subscriptions/xray/base64/mix"
+
+      # Step 2: Upload the downloaded file to the host
+      - name: Upload to FTP Host
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        with:
+          # Your host information, read from GitHub Secrets
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+
+          # The local directory to upload from. '.' means the root of the runner's workspace.
+          # Since we only downloaded one file, this will upload just that file.
+          local-dir: ./
+          
+          # The destination directory on the FTP server. '/' is the root for this FTP user.
+          server-dir: /
+          
+          # A separate name for this workflow's state file to avoid conflicts with other workflows.
+          state-name: .ftp-deploy-state-mix.json
