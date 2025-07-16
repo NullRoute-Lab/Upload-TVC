@@ -1,5 +1,5 @@
 # Workflow name
-name: Fetch and Deploy Mix File
+name: Simple Deploy to Free Host
 
 on:
   # This option allows you to run the workflow manually from the Actions tab (for testing)
