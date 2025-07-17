@@ -5,9 +5,9 @@ on:
   # This option allows you to run the workflow manually from the Actions tab (for testing)
   workflow_dispatch:
 
-  # Scheduled run every two hours
+  # Scheduled run every ten minutes
   schedule:
-    - cron: '0 */2 * * *'
+    - cron: '*/10 * * * *'
 
 jobs:
   build-and-deploy:
@@ -19,7 +19,7 @@ jobs:
       # Step 1: Download the file from the target URL
       - name: Download the external file
         # Use the 'curl' command to download the file and save it as 'mix.txt'
-        run: curl -o mix.txt "https://raw.githubusercontent.com/tvccccc/TVC/refs/heads/main/subscriptions/xray/base64/mix"
+        run: curl -o mix.txt "https://raw.githubusercontent.com/PacketCipher/TVC/refs/heads/main/subscriptions/xray/base64/mix"
 
       # Step 2: Upload the downloaded file to the host
       - name: Upload to FTP Host
