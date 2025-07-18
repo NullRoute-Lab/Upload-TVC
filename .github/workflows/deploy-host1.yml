@@ -25,7 +25,7 @@ jobs:
       - name: Upload to FTP Host
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
-          # Your host information, read from GitHub Secrets
+          # Your host information, read from GitHub Secrets.
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
